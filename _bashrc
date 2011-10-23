@@ -1,0 +1,189 @@
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+################################################################################
+# Defines
+################################################################################
+
+Color_Off='\e[0m'       
+
+# Regular Colors
+Black='\e[0;30m'       
+Red='\e[0;31m'        
+Green='\e[0;32m'     
+Yellow='\e[0;33m'   
+Blue='\e[0;34m'    
+Purple='\e[0;35m' 
+Cyan='\e[0;36m'  
+White='\e[0;37m'
+
+# Bold
+BBlack='\e[1;30m'
+BRed='\e[1;31m' 
+BGreen='\e[1;32m'    
+BYellow='\e[1;33m'  
+BBlue='\e[1;34m'       
+BPurple='\e[1;35m'    
+BCyan='\e[1;36m'      
+BWhite='\e[1;37m'     
+
+# Underline
+UBlack='\e[4;30m'     
+URed='\e[4;31m'       
+UGreen='\e[4;32m'     
+UYellow='\e[4;33m'    
+UBlue='\e[4;34m'      
+UPurple='\e[4;35m'    
+UCyan='\e[4;36m'      
+UWhite='\e[4;37m'     
+
+# Background
+On_Black='\e[40m'      
+On_Red='\e[41m'        
+On_Green='\e[42m'      
+On_Yellow='\e[43m'     
+On_Blue='\e[44m'       
+On_Purple='\e[45m'     
+On_Cyan='\e[46m'       
+On_White='\e[47m'      
+
+# High Intensty
+IBlack='\e[0;90m'      
+IRed='\e[0;91m'        
+IGreen='\e[0;92m'      
+IYellow='\e[0;93m'     
+IBlue='\e[0;94m'       
+IPurple='\e[0;95m'     
+ICyan='\e[0;96m'       
+IWhite='\e[0;97m'     
+
+# Bold High Intensty
+BIBlack='\e[1;90m'     
+BIRed='\e[1;91m'       
+BIGreen='\e[1;92m'     
+BIYellow='\e[1;93m'    
+BIBlue='\e[1;94m'      
+BIPurple='\e[1;95m'    
+BICyan='\e[1;96m'      
+BIWhite='\e[1;97m'     
+
+# High Intensty backgrounds
+On_IBlack='\e[0;100m'  
+On_IRed='\e[0;101m'    
+On_IGreen='\e[0;102m'  
+On_IYellow='\e[0;103m' 
+On_IBlue='\e[0;104m'   
+On_IPurple='\e[10;95m' 
+On_ICyan='\e[0;106m'   
+On_IWhite='\e[0;107m'  
+
+################################################################################
+# History
+################################################################################
+
+export HISTCONTROL=ignoredups:ignorespace # No duplicate lines in history
+export HISTSIZE=1000
+export HISTFILESIZE=5000
+
+################################################################################
+# Prompt and Window
+################################################################################
+
+# Reset the text color to white after an enter is pressed.
+# Allows for different colored command input w/o affecting output
+trap 'echo -ne "\e[0m"' DEBUG
+
+# Bold White text
+#export PS1="\n$BCyan($BWhite\t$BCyan)-($BWhite\u@\h$BCyan)-($BWhite\w$BCyan)\n($BWhite\!$BCyan)$BGreen->$Color_Off "
+
+# Regular White text
+#export PS1="\n$BCyan($White\t$BCyan)-($White\u@\h$BCyan)-($White\w$BCyan)\n($White\!$BCyan)$BGreen->$Color_Off "
+
+# Bold White Command w/ Regular white text
+export PS1="\n$BCyan($White\t$BCyan)-($White\u@\h$BCyan)-($White\w$BCyan)\n($White\!$BCyan)$BGreen->$BWhite "
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+################################################################################
+# Aliases
+#
+# To temporarily ignore an alias, preceed the command with \
+################################################################################
+
+# Misc
+alias pw="mono ~/KeePass/KeePass.exe"
+alias mntinfo="df -hT"
+alias df="df -h"			# Always show diskspace usage in human readable
+alias rm="rm -vi"
+alias cp="cp -vi"
+alias mv="mv -vi"
+alias h="history"
+
+# ls
+alias ls="ls -F --color=always"		# Add colors and append file type indicators
+alias ll="ls -l"			
+alias la="ls -Al"
+alias le="ls -lXB"			# Sort by extension
+alias lf="ls -lSrh"			# Sort by size (list footprint)
+alias lr="ls -lR"			# ls recursively through directories
+alias labc="ls -lap"			# Sort alphabetically by name
+
+alias sl="ls"				# typos
+alias l="ls"
+alias s="ls"
+
+# chmod 				# Not the most helpful...but still
+alias mx="chmod a+x"			
+alias 644="chmod 644"			# -rw-r--r--
+alias 766="chmod 755"			# -rwxrw-rw-
+
+# git
+# maybe later
+
+# apt
+# install, remove, remove --purge, update && upgrade, apt-cache search
+
+################################################################################
+# Functions
+################################################################################
+
+# Instead of having to type cd ../../../.. type up 4
+# Up with no arguments is equivalent to cd ..
+up() {
+	local d=""
+	limit=$1
+
+	for ((i=1 ; i <= limit ; i++))
+	do
+		  d=$d/..
+	done
+
+	d=$(echo $d | sed 's/^\///')
+	if [ -z "$d" ]; then
+		d=..
+	fi
+
+	cd $d
+}
+
+# Makes the directory name passed in and then cd's into it.
+mkcd() {
+	if [ $# != 1 ]; then
+			echo "Calling convention: mkcd <dir>"
+	else
+			mkdir -p $1 && cd $1
+	fi
+}
+################################################################################
+# Programmable Completion
+################################################################################
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
