@@ -100,7 +100,7 @@ trap 'echo -ne "\e[0m"' DEBUG
 #export PS1="\n$BCyan($White\t$BCyan)-($White\u@\h$BCyan)-($White\w$BCyan)\n($White\!$BCyan)$BGreen->$Color_Off "
 
 # Bold White Command w/ Regular white text
-export PS1="\n$BCyan($White\t$BCyan)-($White\u@\h$BCyan)-($White\w$BCyan)\n($White\!$BCyan)$BGreen->$BWhite "
+export PS1="\n\[$BCyan\](\[$White\]\t\[$BCyan\])-(\[$White\]\u@\h\[$BCyan\])-(\[$White\]\w\[$BCyan\])\n(\[$White\]\!\[$BCyan\])\[$BGreen\]->\[$BWhite\] "
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -187,3 +187,5 @@ mkcd() {
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+shopt -s checkwinsize
