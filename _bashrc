@@ -188,4 +188,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+################################################################################
+# Misc
+################################################################################
+# Force vim to check window size after each command
 shopt -s checkwinsize
+
+# Turn off CTRL-s stopping output
+stty stop ''
