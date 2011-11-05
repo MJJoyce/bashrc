@@ -197,5 +197,5 @@ shopt -s checkwinsize
 # Turn off CTRL-s stopping output
 stty stop ''
 
-# Set 256 colors in xterm
+# Set 256 colors
 export TERM="xterm-256color"
