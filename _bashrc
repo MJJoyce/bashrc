@@ -199,3 +199,6 @@ stty stop ''
 
 # Set 256 colors
 export TERM="xterm-256color"
+
+# Set Git editor
+export GIT_EDITOR=vim
