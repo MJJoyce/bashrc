@@ -1,6 +1,9 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Create a user bin for convenience
+export PATH="~/bin:$PATH"
+
 ################################################################################
 # Defines
 ################################################################################
@@ -91,7 +94,7 @@ export HISTFILESIZE=5000
 
 # Reset the text color to white after an enter is pressed.
 # Allows for different colored command input w/o affecting output
-trap 'echo -ne "\e[0m"' DEBUG
+#trap 'echo -ne "\e[0m"' DEBUG
 
 # Bold White text
 #export PS1="\n$BCyan($BWhite\t$BCyan)-($BWhite\u@\h$BCyan)-($BWhite\w$BCyan)\n($BWhite\!$BCyan)$BGreen->$Color_Off "
@@ -100,7 +103,7 @@ trap 'echo -ne "\e[0m"' DEBUG
 #export PS1="\n$BCyan($White\t$BCyan)-($White\u@\h$BCyan)-($White\w$BCyan)\n($White\!$BCyan)$BGreen->$Color_Off "
 
 # Bold White Command w/ Regular white text
-export PS1="\n\[$BCyan\](\[$White\]\t\[$BCyan\])-(\[$White\]\u@\h\[$BCyan\])-(\[$White\]\w\[$BCyan\])\n(\[$White\]\!\[$BCyan\])\[$BGreen\]->\[$BWhite\] "
+#export PS1="\n\[$BCyan\](\[$White\]\t\[$BCyan\])-(\[$White\]\u@\h\[$BCyan\])-(\[$White\]\w\[$BCyan\])\n(\[$White\]\!\[$BCyan\])\[$BGreen\]->\[$BWhite\] "
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -127,7 +130,8 @@ alias mv="mv -vi"
 alias h="history"
 
 # ls
-alias ls="ls -F --color=always"		# Add colors and append file type indicators
+#alias ls="ls -F --color=always"	# Add colors and append file type indicators
+#alias ls="ls -FG"			# Add colors and append file type indicators for OS X
 alias ll="ls -l"			
 alias la="ls -Al"
 alias le="ls -lXB"			# Sort by extension
