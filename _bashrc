@@ -2,7 +2,7 @@
 [ -z "$PS1" ] && return
 
 # Create a user bin for convenience
-export PATH="~/bin:$PATH"
+export PATH="/usr/local/bin:~/bin:$PATH"
 
 ################################################################################
 # Defines
@@ -146,7 +146,12 @@ alias s="ls"
 # chmod 				# Not the most helpful...but still
 alias mx="chmod a+x"			
 alias 644="chmod 644"			# -rw-r--r--
-alias 766="chmod 755"			# -rwxrw-rw-
+alias 755="chmod 755"			# -rwxrw-rw-
+
+# End-of-line character conversions
+alias mac2unix="cat $1 | tr '\r' '\n'"
+alias unix2mac="cat $1 | tr '\n' '\r'"
+alias dos2unix="cat $1 | tr -d '\r'"
 
 # git
 # maybe later
